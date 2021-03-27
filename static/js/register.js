@@ -13,9 +13,9 @@ signUpButton.addEventListener('click', () => {
 	container.classList.add("right-panel-active");
 });
 
-signInButton.addEventListener('click', () => {
-	container.classList.remove("right-panel-active");
-});
+// signInButton.addEventListener('click', () => {
+// 	container.classList.remove("right-panel-active");
+// });
 
 name.addEventListener('input',()=>{
 	
@@ -49,7 +49,8 @@ function startcamera()
 	  // Draw the video frame to the canvas.
 	  context.drawImage(player, 0, 0, snapshotCanvas.width,
 		  snapshotCanvas.height);
-	  console.log(context.canvas.toDataURL());
+	//   console.log(context.canvas.toDataURL());
+	  console.log(context);
 	});
   
 	navigator.mediaDevices.getUserMedia({video: true})
