@@ -50,9 +50,13 @@ function startcamera()
 	  context.drawImage(player, 0, 0, snapshotCanvas.width,
 		  snapshotCanvas.height);
 	//   console.log(context.canvas.toDataURL());
-	  console.log(context);
+	var fullQuality = snapshotCanvas.toDataURL('image/jpeg', 1.0);
+	
+	document.getElementById('image').href=fullQuality;
+	console.log();
 	});
-  
+
 	navigator.mediaDevices.getUserMedia({video: true})
 		.then(handleSuccess);
+	  
 }
