@@ -5,28 +5,12 @@ const name = document.getElementById('name');
 const mobile = document.getElementById('mobile');
 const state = document.getElementById('state');
 const date = document.getElementById('date');
-const form = document.getElementById('form');
+// const form = document.getElementById('form');
 const status = false;
 
 
 signUpButton.addEventListener('click', () => {
 	container.classList.add("right-panel-active");
-});
-
-// signInButton.addEventListener('click', () => {
-// 	container.classList.remove("right-panel-active");
-// });
-
-name.addEventListener('input',()=>{
-	
-});
-
-mobile.addEventListener('input',()=>{
-
-});
-
-state.addEventListener('input',()=>{
-	console.log("Hello");
 });
 
 /* Capture Code*/
@@ -41,22 +25,27 @@ function startcamera()
 
 	var handleSuccess = function(stream) {
 	  // Attach the video stream to the video element and autoplay.
-	  player.srcObject = stream;
+	player.srcObject = stream;
 	};
-  
+
 	captureButton.addEventListener('click', function() {
-	  var context = snapshot.getContext('2d');
+	var context = snapshot.getContext('2d');
 	  // Draw the video frame to the canvas.
-	  context.drawImage(player, 0, 0, snapshotCanvas.width,
-		  snapshotCanvas.height);
+	context.drawImage(player, 0, 0, snapshotCanvas.width,
+		snapshotCanvas.height);
 	//   console.log(context.canvas.toDataURL());
 	var fullQuality = snapshotCanvas.toDataURL('image/jpeg', 1.0);
-	
-	document.getElementById('image').href=fullQuality;
-	console.log();
+	// console.log(fullQuality);
+	// document.getElementById('image_str').value=fullQuality;
 	});
 
 	navigator.mediaDevices.getUserMedia({video: true})
 		.then(handleSuccess);
-	  
 }
+// sending backend form
+var form = document.getElementById("myForm");
+function handleForm(event) { 
+	event.preventDefault(); 
+	console.log(document.getElementById('image_str').value)
+} 
+form.addEventListener('submit', handleForm);
