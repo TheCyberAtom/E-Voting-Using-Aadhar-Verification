@@ -19,13 +19,13 @@
                 <input type="text" id="name" name="name" placeholder="Name" pattern="[a-zA-Z ]{2,20}" title="Name should not contain any digits." required/>
                 <input type="tel" id="mobile" name="mobile" placeholder="Mobile" pattern="[0-9]{10}" title="Mobile number should exactly be 10 digits." required/>
                 <input type="text" name="state" id="state" placeholder="State" pattern="[a-zA-Z ]{2,15}" required>
-                <input type="text" id="date" name="date" placeholder="DOB (MM/DD/YYYY)" min="1900-01-01" max="2004-04-08" onfocus="(this.type='date')" required>
+                <input type="date" id="date" name="date" placeholder="DOB (MM/DD/YYYY)" min="1900-01-01" max="2004-04-08" required>
                 <select id="sex" name="sex" required>
                     <option value="Male">Male</option>
                     <option value="Female">Female</option>
                     <option value="Others">Transgender</option>
                 </select>
-                <input type="button" class="scan" value="Scan Your Aadhar" onclick="startcamera()" >
+                <input type="test" name="aadharnum" placeholder="Enter Your Aadhar" pattern="[0-9]{12}">
                 <button type="submit">Sign Up</button>
             </form>
         </div>
@@ -44,16 +44,6 @@
                 </div>
             </div>
         </div>
-    </div>
-    <div class="camera" id="cam">
-        <video id="player" width=250 height=250 autoplay ></video>
-        <button id="capture">capture</button>
-        <canvas id="snapshot" width=250 height=200 ></canvas>
-        <a href="" id="image"></a>
-        <form id="myForm" method="GET">  {% csrf_token %}
-            <span id="image_str" name="image">hi</span>
-            <button type="submit">send</button>
-        </form>
     </div>
 </div>
     <footer>

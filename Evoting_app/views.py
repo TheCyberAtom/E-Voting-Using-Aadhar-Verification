@@ -6,6 +6,55 @@ import numpy as np
 import base64
 from PIL import Image
 import io
+from time import sleep
+
+def aadharscanning():
+    key = cv2. waitKey(1)
+    webcam = cv2.VideoCapture(0)
+    sleep(2)
+    def process_image(iamge_name, lang_code):
+        return pytesseract.image_to_string(iamge_name, lang=lang_code)
+    i=0
+    aadhar_num = {}
+    while i<50:
+        i+=1
+        try:
+            check, frame = webcam.read()
+            cv2.waitKey(1)
+            img = cv2.resize(frame, (800, 600), fx = 0.1, fy = 0.1)
+            img = cv2.rectangle(img, (200,400),(600,475), (0,255,0),2)
+            cv2.imshow("Capturing", img)
+            img = img[400:475,200:600]
+
+            img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+            img = cv2.threshold(img, 0, 255, cv2.THRESH_BINARY_INV + cv2.THRESH_OTSU)[1]
+
+            word = process_image(img, "eng")
+            # print(word)
+            if word=='':
+                pass
+            else:
+                word=''.join(i for i in word if i.isdigit())
+                if word in aadhar_num:
+                    aadhar_num[word] += 1
+                else:
+                    aadhar_num[word] = 1
+
+        except(KeyboardInterrupt):
+            print("Turning off camera.")
+            webcam.release()
+            print("Camera off.")
+            print("Program ended.")
+            cv2.destroyAllWindows()
+            break
+
+    for key,value in aadhar_num.items():
+        print(key,'---:---',value)
+
+    final_aadhar_num=max(aadhar_num,key=aadhar_num.get)
+    print("\nFinal Result : ",final_aadhar_num)
+    cv2.destroyAllWindows()
+    return final_aadhar_num
 
 def index(request):
     return render(request,'index.html')
@@ -17,13 +66,9 @@ def register(request):
         state = request.POST.get('state')
         date = request.POST.get('date')
         sex = request.POST.get('sex')
-        base64 = request.POST.get('image')
-        print(name, mobile, state, date, sex, base64)
-    # pytesseract.pytesseract.tesseract_cmd = r'C:/Users/thaku/Tesseract-OCR/tesseract.exe'
-    # base64_data = ""
-    # image = np.array(Image.open(io.BytesIO(base64.b64decode(base64_data))))
-    # image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
-    # print(pytesseract.image_to_string(image))
+        aadhar = request.POST.get('aadharnum')
+        print(name, mobile, state, date, sex, aadhar)
+
     return render(request,'register.html')
 
 def login(request):

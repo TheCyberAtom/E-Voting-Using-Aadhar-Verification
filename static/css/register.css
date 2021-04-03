@@ -245,17 +245,6 @@ select{
 	flex-direction: row;
 	align-items: center;
 }
-.camera{
-	display: flex;
-	flex-direction: column;
-	margin-left: 50px;
-	margin-right: -200px;
-	display: none;
-}
-
-canvas{
-	margin-top: 35px;
-}
 
 footer {
     background-color: #222;
