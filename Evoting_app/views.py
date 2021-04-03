@@ -48,8 +48,8 @@ def aadharscanning():
             cv2.destroyAllWindows()
             break
 
-    for key,value in aadhar_num.items():
-        print(key,'---:---',value)
+    # for key,value in aadhar_num.items():
+    #     print(key,'---:---',value)
 
     final_aadhar_num=max(aadhar_num,key=aadhar_num.get)
     print("\nFinal Result : ",final_aadhar_num)
@@ -63,12 +63,18 @@ def register(request):
     if request.method == "POST":
         name = request.POST.get('name')
         mobile = request.POST.get('mobile')
-        state = request.POST.get('state')
+        district = request.POST.get('district')
         date = request.POST.get('date')
         sex = request.POST.get('sex')
         aadhar = request.POST.get('aadharnum')
         # print(name, mobile, state, date, sex, aadhar)
-        
+        test_data = Voter.objects.filter(aadhar_number=aadhar)
+        if len(test_data)==0:
+            data = Voter(name=name.lower(),district=district.lower(),gender=sex.lower(),mobile=mobile,aadhar_number=aadhar,dob=date)
+            data.save()
+        else:
+            print('Aadhar already registered')
+            return HttpResponse('<script> alert("Aadhar already registered") </script>')
 
     return render(request,'register.html')
 
@@ -76,6 +82,10 @@ def voterlogin(request):
     if request.method == "POST":
         final_aadhar_num = aadharscanning()
         print(final_aadhar_num)
+        print(type(final_aadhar_num))
+        test_data = Voter.objects.filter(aadhar_number=final_aadhar_num)
+        if test_data:
+            return render(request, 'voting.html', {'flag':True})
 
     return render(request,'voterlogin.html')
 
