@@ -82,7 +82,6 @@ def voterlogin(request):
     if request.method == "POST":
         final_aadhar_num = aadharscanning()
         print(final_aadhar_num)
-        print(type(final_aadhar_num))
         test_data = Voter.objects.filter(aadhar_number=final_aadhar_num)
         if test_data:
             return render(request, 'voting.html', {'flag':True})
