@@ -36,9 +36,12 @@ def login(request):
             status, img = video.read()
             i+=1
     video.release()
-    pytesseract.pytesseract.tesseract_cmd = r'C:/Users/thaku/Tesseract-OCR/tesseract.exe'
-    cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
-    print(pytesseract.image_to_string(img))
+    img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+    img = cv2.Canny(img, 100, 200)
+
+    pytesseract.pytesseract.tesseract_cmd = r'C:/Tesseract-OCR/tesseract.exe'
+    # cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+    print(pytesseract.image_to_string(img,config = r'--oem 3 --psm 6'))
     return render(request,'voting.html',{'flag':flag})
 
 def officerlogin(request):
