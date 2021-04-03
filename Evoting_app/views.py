@@ -60,6 +60,7 @@ def index(request):
     return render(request,'index.html')
 
 def register(request):
+    print("hello")
     if request.method == "POST":
         name = request.POST.get('name')
         mobile = request.POST.get('mobile')
