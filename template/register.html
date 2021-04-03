@@ -14,7 +14,7 @@
 <div class="main">
     <div class="container" id="container">
         <div class="form-container sign-up-container">
-            <form id="form" method="POST" >  {% csrf_token %}
+            <form id="form" method="POST" action="/Evoting_app/register">  {% csrf_token %}
                 <h1>Create Account</h1>
                 <input type="text" id="name" name="name" placeholder="Name" pattern="[a-zA-Z ]{2,20}" title="Name should not contain any digits." required/>
                 <input type="tel" id="mobile" name="mobile" placeholder="Mobile" pattern="[0-9]{10}" title="Mobile number should exactly be 10 digits." required/>

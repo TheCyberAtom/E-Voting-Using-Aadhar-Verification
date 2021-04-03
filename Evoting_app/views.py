@@ -60,7 +60,6 @@ def index(request):
     return render(request,'index.html')
 
 def register(request):
-    print("hello")
     if request.method == "POST":
         name = request.POST.get('name')
         mobile = request.POST.get('mobile')
@@ -68,27 +67,17 @@ def register(request):
         date = request.POST.get('date')
         sex = request.POST.get('sex')
         aadhar = request.POST.get('aadharnum')
-        print(name, mobile, state, date, sex, aadhar)
+        # print(name, mobile, state, date, sex, aadhar)
+        
 
     return render(request,'register.html')
 
-def login(request):
-    video = cv2.VideoCapture(0,cv2.CAP_DSHOW)
-    img = ''
-    flag = True
-    if video.isOpened():
-        i=0
-        while i<8:
-            status, img = video.read()
-            i+=1
-    video.release()
-    img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-    img = cv2.Canny(img, 100, 200)
+def voterlogin(request):
+    if request.method == "POST":
+        final_aadhar_num = aadharscanning()
+        print(final_aadhar_num)
 
-    pytesseract.pytesseract.tesseract_cmd = r'C:/Tesseract-OCR/tesseract.exe'
-    # cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
-    print(pytesseract.image_to_string(img,config = r'--oem 3 --psm 6'))
-    return render(request,'voting.html',{'flag':flag})
+    return render(request,'voterlogin.html')
 
 def officerlogin(request):
     usn,pwd = '',''

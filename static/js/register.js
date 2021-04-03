@@ -12,3 +12,7 @@ const status = false;
 signUpButton.addEventListener('click', () => {
 	container.classList.add("right-panel-active");
 });
+
+const loginscan = document.getElementById('scanform');
+function handleForm(event) { event.preventDefault(); } 
+loginscan.addEventListener('submit', handleForm);
