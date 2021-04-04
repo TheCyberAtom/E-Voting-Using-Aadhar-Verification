@@ -11,7 +11,7 @@
     {% if flag %}
 </head>
 <body>
-    <div class="heading"><button class="logout">Logout</button></div>
+    <div class="heading" hidden><button class="logout">Logout</button></div>
     
     <div class="container" id="container">
         <div class="voter_name">
@@ -24,13 +24,13 @@
                 <h2>{{i.name}}</h2>
                 <h3>{{i.party_name}}</h3>
                 <h3>{{i.district}}</h3>
-                <button class="vote">VOTE</button>
+                <button class="vote">VOTE / मतदान</button>
             </div>
             {% endfor %}
         </div>
     </div>
     <footer>
-        <p>E-Voting with Aadhar Verification &copy 2021</p>
+        <p>E-Voting with Aadhar Verification &copy 2021 / आधार सत्यापन के साथ ई-वोटिंग © 2021</p>
     </footer>
 {% else %}
 <center><h1>You are not registered user</h1></center>
