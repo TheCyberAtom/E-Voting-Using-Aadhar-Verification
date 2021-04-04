@@ -2,10 +2,6 @@ from django.shortcuts import render,HttpResponse
 from .models import Candidate,Voter,Official
 import pytesseract
 import cv2
-import numpy as np
-import base64
-from PIL import Image
-import io
 from time import sleep
 
 def aadharscanning():
@@ -30,7 +26,6 @@ def aadharscanning():
             img = cv2.threshold(img, 0, 255, cv2.THRESH_BINARY_INV + cv2.THRESH_OTSU)[1]
 
             word = process_image(img, "eng")
-            # print(word)
             if word=='':
                 pass
             else:
@@ -81,11 +76,13 @@ def register(request):
 def voterlogin(request):
     if request.method == "POST":
         final_aadhar_num = aadharscanning()
-        print(final_aadhar_num)
-        test_data = Voter.objects.filter(aadhar_number=final_aadhar_num)
-        if test_data:
-            return render(request, 'voting.html', {'flag':True})
 
+        test_data = Voter.objects.values('district','aadhar_number').get(aadhar_number=final_aadhar_num)
+        print(test_data)
+        if test_data:
+            candidates = Candidate.objects.values('name','party_name','district').filter(district=test_data['district'])
+            print(candidates)
+            return render(request, 'voting.html', {'flag':True, 'candidate':candidates})
     return render(request,'voterlogin.html')
 
 def officerlogin(request):
