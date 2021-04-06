@@ -108,4 +108,4 @@ def voting(request):
         name = request.POST.get('name')
         print(name)
         Candidate.objects.filter(name=name).update(vote_count=F('vote_count') + 1)
-    return HttpResponse('<h1>Thanks for voting</h1>')
+    return render(request,"thankyou.html")
