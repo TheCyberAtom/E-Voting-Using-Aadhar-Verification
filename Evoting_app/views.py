@@ -3,6 +3,7 @@ from .models import Candidate,Voter,Official
 import pytesseract
 import cv2
 from time import sleep
+from django.db.models import F
 
 def aadharscanning():
     key = cv2. waitKey(1)
@@ -70,19 +71,21 @@ def register(request):
         else:
             print('Aadhar already registered')
             return HttpResponse('<script> alert("Aadhar already registered") </script>')
-
     return render(request,'register.html')
 
 def voterlogin(request):
     if request.method == "POST":
-        final_aadhar_num = aadharscanning()
-
-        test_data = Voter.objects.values('district','aadhar_number').get(aadhar_number=final_aadhar_num)
-        print(test_data)
-        if test_data:
-            candidates = Candidate.objects.values('name','party_name','district').filter(district=test_data['district'])
-            print(candidates)
-            return render(request, 'voting.html', {'flag':True, 'candidate':candidates})
+        try:
+            final_aadhar_num = aadharscanning()
+            test_data = Voter.objects.values('district','aadhar_number').get(aadhar_number=final_aadhar_num)
+            # print(test_data)
+            if test_data:
+                candidates = Candidate.objects.values('name','party_name','district').filter(district=test_data['district'])
+                # print(candidates)
+                return render(request, 'voting.html', {'flag':True, 'candidate':candidates})
+        except Exception as e:
+            cv2.destroyAllWindows()
+            return render(request, 'voting.html', {'flag':False})
     return render(request,'voterlogin.html')
 
 def officerlogin(request):
@@ -99,3 +102,10 @@ def officerlogin(request):
     else:
         return render(request, 'officer.html')
     return render(request, 'officer.html')
+
+def voting(request):
+    if request.method == "POST":
+        name = request.POST.get('name')
+        print(name)
+        Candidate.objects.filter(name=name).update(vote_count=F('vote_count') + 1)
+    return HttpResponse('<h1>Thanks for voting</h1>')

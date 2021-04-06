@@ -16,3 +16,4 @@ signUpButton.addEventListener('click', () => {
 const loginscan = document.getElementById('scanform');
 function handleForm(event) { event.preventDefault(); } 
 loginscan.addEventListener('submit', handleForm);
+
