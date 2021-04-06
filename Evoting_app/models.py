@@ -14,7 +14,7 @@ class Candidate(models.Model):
     vote_count = models.IntegerField(default=0)
 
     def __str__(self):
-        return self.name
+        return self.name+"   "+str(self.vote_count)
 
 class Voter(models.Model):
     id = models.AutoField
